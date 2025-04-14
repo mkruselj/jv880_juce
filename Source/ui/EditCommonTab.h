@@ -29,7 +29,7 @@ public:
     void sliderValueChanged (juce::Slider*) override;
     void buttonClicked (juce::Button*) override;
     void buttonStateChanged (juce::Button*) override;
-    void comboBoxChanged (juce::ComboBox*);
+    void comboBoxChanged (juce::ComboBox*) override;
 
 private:
     Jv880_juceAudioProcessor& audioProcessor;

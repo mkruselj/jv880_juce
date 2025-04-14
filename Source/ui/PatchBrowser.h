@@ -112,6 +112,7 @@ private:
           groupI = categoriesListBox->getSelectedRow();
           owner->updateContent();
           owner->deselectAllRows();
+          owner->repaint();
         }
       }
 
