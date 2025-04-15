@@ -65,7 +65,7 @@ jobs:
               ./Builds/MacOSX/build/Release/jv880.component.macOS.zip
               ./Builds/MacOSX/build/Release/jv880.app.macOS.zip
   build-linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3.3.0
       with:

@@ -104,7 +104,7 @@ struct Tone {
   uint8_t drySend;
   uint8_t reverbSend;
   uint8_t chorusSend;
-} __attribute__((__packed__)); // 84 bytes
+}; // 84 bytes
 #pragma pack(pop)
 
 #pragma pack(push, 1)
@@ -137,5 +137,5 @@ struct Patch {
   // 7: key assign
   uint8_t portamentoTime; // 7: portamento type
   Tone tones[4];
-} __attribute__((__packed__)); // 362 bytes
+}; // 362 bytes
 #pragma pack(pop)
