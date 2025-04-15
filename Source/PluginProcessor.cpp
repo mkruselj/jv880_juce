@@ -331,8 +331,10 @@ void Jv880_juceAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
-  if (!loaded)
+  if (!loaded) {
+    mcuLock.exit();
     return;
+  }
 
   float *channelDataL = buffer.getWritePointer(0);
   float *channelDataR = buffer.getWritePointer(1);
@@ -372,8 +374,10 @@ void Jv880_juceAudioProcessor::setStateInformation(const void *data,
   mcu->nvram[0x00] = status.masterTune;
   mcu->nvram[0x02] = status.reverbEnabled | status.chorusEnabled << 1;
 
-  if (expansionsDescr[status.currentExpansion] == nullptr)
+  if (expansionsDescr[status.currentExpansion] == nullptr) {
+    mcuLock.exit();
     return;
+  }
 
   memcpy(mcu->pcm.waverom_exp, expansionsDescr[status.currentExpansion],
          0x800000);
