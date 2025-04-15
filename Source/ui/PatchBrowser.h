@@ -10,13 +10,13 @@
 
 #pragma once
 
-#include <JuceHeader.h>
 #include "../PluginProcessor.h"
+#include <JuceHeader.h>
 
-static const char* groupNames[] = {
+static const char *groupNames[] = {
     "JV-880 Factory",
     "RD-500 Factory",
-    "JD-990 Factory",
+    // "JD-990 Factory",
     "SR-JV80: 01 Pop",
     "SR-JV80: 02 Orchestral",
     "SR-JV80: 03 Piano",
@@ -43,100 +43,128 @@ const int rowPerColumn = 43;
 
 //==============================================================================
 /*
-*/
-class PatchBrowser  : public juce::Component
-{
+ */
+class PatchBrowser : public juce::Component {
 public:
-    PatchBrowser(Jv880_juceAudioProcessor&);
-    ~PatchBrowser() override;
+  PatchBrowser(Jv880_juceAudioProcessor &);
+  ~PatchBrowser() override;
 
-    void resized() override;
+  void resized() override;
 
 private:
-    Jv880_juceAudioProcessor& audioProcessor;
+  Jv880_juceAudioProcessor &audioProcessor;
 
-    class CategoriesListModel : public juce::ListBoxModel, public juce::ChangeBroadcaster {
-      int getNumRows() override {
-        return 22;
+  class CategoriesListModel : public juce::ListBoxModel,
+                              public juce::ChangeBroadcaster {
+    int getNumRows() override { return NUM_EXPS + 1; }
+
+    void paintListBoxItem(int rowNumber, juce::Graphics &g, int width,
+                          int height, bool rowIsSelected) override {
+      g.fillAll(rowIsSelected ? juce::Colour(0xff42A2C8)
+                              : juce::Colour(0xff263238));
+
+      g.setColour(rowIsSelected ? juce::Colours::black : juce::Colours::white);
+
+      if (rowNumber < NUM_EXPS + 1)
+        g.drawFittedText(groupNames[rowNumber], {5, 0, width, height - 2},
+                         juce::Justification::left, 1);
+
+      g.setColour(juce::Colours::white.withAlpha(0.4f));
+      g.drawRect(0, height - 1, width, 2);
+      g.drawRect(width - 2, 0, width, height);
+    }
+
+    void selectedRowsChanged(int lastRowSelected) override {
+      sendChangeMessage();
+    }
+  };
+  CategoriesListModel categoriesListModel;
+  juce::ListBox categoriesListBox;
+
+  class PatchesListModel : public juce::ListBoxModel,
+                           public juce::ChangeListener {
+  public:
+    PatchesListModel(int startI, int endI, PatchBrowser *parent,
+                     juce::ListBox *categoriesListBox,
+                     CategoriesListModel *categoriesListModel)
+        : startI(startI), endI(endI), categoriesListBox(categoriesListBox),
+          categoriesListModel(categoriesListModel), parent(parent) {
+      categoriesListModel->addChangeListener(this);
+    }
+
+    int getNumRows() override {
+      if (!parent->audioProcessor.loaded) {
+        return 0;
       }
 
-      void paintListBoxItem(int rowNumber, juce::Graphics& g, int width, int height, bool rowIsSelected) override {
-        g.fillAll (rowIsSelected ? juce::Colour (0xff42A2C8)
-                                 : juce::Colour (0xff263238));
+      return std::min(
+          endI - startI,
+          (int)parent->audioProcessor.patchInfoPerGroup[groupI].size() -
+              startI);
+    }
 
-        g.setColour (rowIsSelected ? juce::Colours::black : juce::Colours::white);
+    void paintListBoxItem(int rowNumber, juce::Graphics &g, int width,
+                          int height, bool rowIsSelected) override {
+      g.fillAll(rowIsSelected ? juce::Colour(0xff42A2C8)
+                              : juce::Colour(0xff263238));
 
-        if (rowNumber < 22)
-            g.drawFittedText (groupNames[rowNumber], { 5, 0, width, height - 2 }, juce::Justification::left, 1);
+      g.setColour(rowIsSelected ? juce::Colours::black : juce::Colours::white);
 
-        g.setColour (juce::Colours::white.withAlpha (0.4f));
-        g.drawRect (0, height - 1, width, 2);
-        g.drawRect (width - 2, 0, width, height);
+      if (!parent->audioProcessor.loaded) {
+        return;
       }
 
-      void selectedRowsChanged(int lastRowSelected) override {
-        sendChangeMessage();
+      int length =
+          parent->audioProcessor.patchInfoPerGroup[groupI][rowNumber + startI]
+              ->nameLength;
+      const char *strPtr = (const char *)parent->audioProcessor
+                               .patchInfoPerGroup[groupI][rowNumber + startI]
+                               ->name;
+      juce::String str = juce::String(strPtr, length);
+      g.drawFittedText(str, {5, 0, width, height - 2},
+                       juce::Justification::left, 1);
+
+      g.setColour(juce::Colours::white.withAlpha(0.4f));
+      g.drawRect(0, height - 1, width, 1);
+    }
+
+    void changeListenerCallback(juce::ChangeBroadcaster *source) override {
+      if (source == categoriesListModel) {
+        groupI = categoriesListBox->getSelectedRow();
+        owner->updateContent();
+        owner->deselectAllRows();
+        owner->repaint();
       }
-    };
-    CategoriesListModel categoriesListModel;
-    juce::ListBox categoriesListBox;
+    }
 
-    class PatchesListModel : public juce::ListBoxModel, public juce::ChangeListener {
-    public:
-      PatchesListModel(int startI, int endI, PatchBrowser* parent, juce::ListBox* categoriesListBox, CategoriesListModel* categoriesListModel)
-        : startI(startI), endI(endI), categoriesListBox(categoriesListBox), categoriesListModel(categoriesListModel), parent(parent) {
-        categoriesListModel->addChangeListener(this);
-      }
-
-      int getNumRows() override {
-        return std::min(endI - startI, (int)parent->audioProcessor.patchInfoPerGroup[groupI].size() - startI);
-      }
-
-      void paintListBoxItem(int rowNumber, juce::Graphics& g, int width, int height, bool rowIsSelected) override {
-        g.fillAll (rowIsSelected ? juce::Colour (0xff42A2C8)
-                                 : juce::Colour (0xff263238));
-
-        g.setColour (rowIsSelected ? juce::Colours::black : juce::Colours::white);
-
-        int length = parent->audioProcessor.patchInfoPerGroup[groupI][rowNumber + startI]->nameLength;
-        const char* strPtr = (const char*)parent->audioProcessor.patchInfoPerGroup[groupI][rowNumber + startI]->name;
-        juce::String str = juce::String(strPtr, length);
-        g.drawFittedText (str, { 5, 0, width, height - 2 }, juce::Justification::left, 1);
-
-        g.setColour (juce::Colours::white.withAlpha (0.4f));
-        g.drawRect (0, height - 1, width, 1);
+    void selectedRowsChanged(int lastRowSelected) override {
+      if (!parent->audioProcessor.loaded) {
+        return;
       }
 
-      void changeListenerCallback(juce::ChangeBroadcaster* source) override {
-        if (source == categoriesListModel) {
-          groupI = categoriesListBox->getSelectedRow();
-          owner->updateContent();
-          owner->deselectAllRows();
-          owner->repaint();
-        }
+      for (size_t i = 0; i < columns; i++) {
+        if (lastRowSelected != -1 && parent->patchesListBoxes[i] != owner)
+          parent->patchesListBoxes[i]->deselectAllRows();
       }
 
-      void selectedRowsChanged(int lastRowSelected) override {
-        for (size_t i = 0; i < columns; i++) {
-          if (lastRowSelected != -1 && parent->patchesListBoxes[i] != owner)
-            parent->patchesListBoxes[i]->deselectAllRows();
-        }
-        
-        int selected = owner->getSelectedRow() + startI;
-        if (selected >= 0 && selected < parent->audioProcessor.patchInfoPerGroup[groupI].size())
-          parent->audioProcessor.setCurrentProgram(parent->audioProcessor.patchInfoPerGroup[groupI][selected]->iInList);
-      }
+      int selected = owner->getSelectedRow() + startI;
+      if (selected >= 0 &&
+          selected < parent->audioProcessor.patchInfoPerGroup[groupI].size())
+        parent->audioProcessor.setCurrentProgram(
+            parent->audioProcessor.patchInfoPerGroup[groupI][selected]
+                ->iInList);
+    }
 
-      int groupI = 0;
-      int startI;
-      int endI;
-      juce::ListBox* owner = nullptr;
-      juce::ListBox* categoriesListBox;
-      CategoriesListModel* categoriesListModel;
-      PatchBrowser* parent;
-    };
-    PatchesListModel *patchesListModels[columns];
-    juce::ListBox *patchesListBoxes[columns];
+    int groupI = 0;
+    int startI;
+    int endI;
+    juce::ListBox *owner = nullptr;
+    juce::ListBox *categoriesListBox;
+    CategoriesListModel *categoriesListModel;
+    PatchBrowser *parent;
+  };
+  PatchesListModel *patchesListModels[columns];
+  juce::ListBox *patchesListBoxes[columns];
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PatchBrowser)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PatchBrowser)
 };

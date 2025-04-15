@@ -1139,10 +1139,8 @@ void MCU::MCU_EncoderTrigger(int dir)
 
 MCU::MCU() : pcm(this), lcd(this), mcu_timer(this), sub_mcu(this) {}
 
-int MCU::startSC55(const char* s_rom1, const char* s_rom2, const char* s_waverom1, const char* s_waverom2, const char* s_nvram)
+int MCU::startSC55(const uint8_t* s_rom1, const uint8_t* s_rom2, const uint8_t* s_waverom1, const uint8_t* s_waverom2, const uint8_t* s_nvram)
 {
-    uint8_t* tempbuf = (uint8_t*) malloc(0x800000);
-
     romset = ROM_SET_JV880;
 
     mcu_mk1 = false;
@@ -1195,19 +1193,15 @@ int MCU::startSC55(const char* s_rom1, const char* s_rom2, const char* s_waverom
 
     if (mcu_mk1)
     {
-        memcpy(tempbuf, s_waverom1, 0x100000);
-        unscramble(tempbuf, pcm.waverom1, 0x100000);
-        memcpy(tempbuf, s_waverom2, 0x100000);
-        unscramble(tempbuf, pcm.waverom2, 0x100000);
+        memcpy(pcm.waverom1, s_waverom1, 0x100000);
+        memcpy(pcm.waverom2, s_waverom2, 0x100000);
         // memcpy(tempbuf, s_waverom3, 0x100000);
         // unscramble(tempbuf, pcm.waverom3, 0x100000);
     }
     else if (mcu_jv880)
     {
-        memcpy(tempbuf, s_waverom1, 0x200000);
-        unscramble(tempbuf, pcm.waverom1, 0x200000);
-        memcpy(tempbuf, s_waverom2, 0x200000);
-        unscramble(tempbuf, pcm.waverom2, 0x200000);
+        memcpy(pcm.waverom1, s_waverom1, 0x200000);
+        memcpy(pcm.waverom2, s_waverom2, 0x200000);
 
         // if (s_rf[4] && fread(tempbuf, 1, 0x800000, s_rf[4]))
         //     unscramble(tempbuf, pcm.waverom_exp, 0x800000);
@@ -1221,13 +1215,9 @@ int MCU::startSC55(const char* s_rom1, const char* s_rom2, const char* s_waverom
     }
     else
     {
-        memcpy(tempbuf, s_waverom1, 0x200000);
-        unscramble(tempbuf, pcm.waverom1, 0x200000);
-        memcpy(tempbuf, s_waverom2, 0x100000);
-        unscramble(tempbuf, pcm.waverom2, 0x100000);
+        memcpy(pcm.waverom1, s_waverom1, 0x200000);
+        memcpy(pcm.waverom2, s_waverom2, 0x100000);
     }
-
-    free(tempbuf);
 
     SC55_Reset();
 

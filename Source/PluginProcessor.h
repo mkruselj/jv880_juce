@@ -11,8 +11,9 @@
 #include <vector>
 #include <JuceHeader.h>
 #include "emulator/mcu.h"
+#include "rom.h"
 
-constexpr int NUM_EXPS = 21;
+constexpr int NUM_EXPS = 20;
 
 //==============================================================================
 /**
@@ -88,6 +89,11 @@ public:
     PatchInfo patchInfos[192 + 256 * NUM_EXPS] = {0};
     std::vector<std::vector<PatchInfo*>> patchInfoPerGroup;
     int totalPatchesExp = 0;
+
+    std::array<uint8_t*, romCount> loadedRoms = {0};
+    bool loaded = false;
+
+    juce::SpinLock mcuLock;
 
 private:
     //==============================================================================

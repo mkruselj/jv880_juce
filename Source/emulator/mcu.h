@@ -403,7 +403,7 @@ struct MCU {
     void MCU_PostUART(uint8_t data);
     void MCU_EncoderTrigger(int dir);
 
-    int startSC55(const char* s_rom1, const char* s_rom2, const char* s_waverom1, const char* s_waverom2, const char* s_nvram);
+    int startSC55(const uint8_t* s_rom1, const uint8_t* s_rom2, const uint8_t* s_waverom1, const uint8_t* s_waverom2, const uint8_t* s_nvram);
     void updateSC55WithSampleRate(float *dataL, float *dataR, unsigned int nFrames, int destSampleRate);
     void postMidiSC55(const uint8_t* message, int length);
     void enqueueMidiSC55(const uint8_t* message, int length, int samplePos);
