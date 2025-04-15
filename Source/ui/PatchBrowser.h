@@ -92,6 +92,10 @@ private:
       categoriesListModel->addChangeListener(this);
     }
 
+    ~PatchesListModel() override {
+      categoriesListModel->removeChangeListener(this);
+    }
+
     int getNumRows() override {
       if (!parent->audioProcessor.loaded) {
         return 0;
