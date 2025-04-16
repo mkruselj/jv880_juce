@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <chrono>
+#include <cmath>
 #include "mcu.h"
 #include "mcu_opcodes.h"
 #include "mcu_interrupt.h"
@@ -1235,7 +1236,7 @@ int MCU::startSC55(const uint8_t* s_rom1, const uint8_t* s_rom2, const uint8_t* 
 
 void MCU::updateSC55WithSampleRate(float *dataL, float *dataR, unsigned int nFrames, int destSampleRate) {
     double renderBufferFramesFloat = (double)nFrames / destSampleRate * 64000;
-    unsigned int renderBufferFrames = ceil(renderBufferFramesFloat);
+    unsigned int renderBufferFrames = std::ceil(renderBufferFramesFloat);
     double currentError = renderBufferFrames - renderBufferFramesFloat;
 
     int limit = nFrames / 2;
