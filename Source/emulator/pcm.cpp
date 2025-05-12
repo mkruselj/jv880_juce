@@ -262,9 +262,14 @@ constexpr inline int32_t sx20(int32_t in)
     return (in << 12) >> 12;
 }
 
-inline int32_t addclip20(int32_t add1, int32_t add2, int32_t cin)
+inline uint32_t addclip20(uint32_t add1, uint32_t add2, uint32_t cin)
 {
-    return sx20(add1) + sx20(add2) + cin;
+    uint32_t sum = (add1 + add2 + cin) & 0xfffff;
+    if ((add1 & 0x80000) != 0 && (add2 & 0x80000) != 0 && (sum & 0x80000) == 0)
+        sum = 0x80000;
+    else if ((add1 & 0x80000) == 0 && (add2 & 0x80000) == 0 && (sum & 0x80000) != 0)
+        sum = 0x7ffff;
+    return sum;
 }
 
 inline int32_t multi(int32_t val1, int8_t val2)
@@ -492,7 +497,6 @@ void Pcm::PCM_Update(uint64_t cycles)
 
             // if (pcm.config_reg_3c & 0x40) // oversampling
             if (true) // oversampling
-            // if (false) // oversampling
             {
                 pcm.ram2[30][10] = shifter;
 
@@ -1242,7 +1246,7 @@ void Pcm::PCM_Update(uint64_t cycles)
             int filter = ram2[11];
             int v3;
 
-            if (mcu->mcu_mk1)
+            if (false)
             {
                 int mult1 = multi(reg1, filter >> 8); // 8
                 int mult2 = multi(reg1, (filter >> 1) & 127); // 9
@@ -1300,10 +1304,7 @@ void Pcm::PCM_Update(uint64_t cycles)
                     ram2[8] |= 0x4000;
                 pcm.irq_assert = 1;
                 pcm.irq_channel = slot;
-                if (mcu->mcu_jv880)
-                    mcu->MCU_GA_SetGAInt(5, 1);
-                else
-                    MCU_Interrupt_SetRequest(mcu, INTERRUPT_SOURCE_IRQ0, 1);
+                mcu->MCU_GA_SetGAInt(5, 1);
             }
 
             int volmul1 = 0;
@@ -1436,6 +1437,6 @@ void Pcm::PCM_Update(uint64_t cycles)
 
         int cycles = (reg_slots + 1) * 25;
 
-        pcm.cycles += mcu->mcu_jv880 ? (cycles * 25) / 29 : cycles;
+        pcm.cycles += (cycles * 25) / 29;
     }
 }

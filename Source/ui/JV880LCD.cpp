@@ -13,7 +13,7 @@
 
 //==============================================================================
 JV880LCD::JV880LCD(Jv880_juceAudioProcessor &p)
-    : audioProcessor(p), redrawTimer(this) {
+    : redrawTimer(this), audioProcessor(p) {
   redrawTimer.startTimerHz(60 / 3);
 }
 
