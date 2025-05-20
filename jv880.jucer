@@ -2,9 +2,9 @@
 
 <JUCERPROJECT id="DSwmeO" name="virtual_jv" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
-              pluginManufacturerCode="VRJV" pluginCode="VRJV" cppLanguageStandard="latest"
+              pluginManufacturerCode="GlZs" pluginCode="VRJV" cppLanguageStandard="latest"
               pluginFormats="buildAU,buildAUv3,buildStandalone,buildVST3" pluginName="VirtualJV"
-              pluginDesc="VirtualJV" companyName="VirtualJV">
+              pluginDesc="VirtualJV" companyName="Giulio Zausa">
   <MAINGROUP id="U4zWTk" name="virtual_jv">
     <GROUP id="{A9A4FE8C-A726-5731-A9C6-45A227C17A55}" name="Source">
       <FILE id="V15HPu" name="rom.cpp" compile="1" resource="0" file="Source/rom.cpp"/>
