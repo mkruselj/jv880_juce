@@ -100,7 +100,7 @@ private:
   juce::Label panLabel{ "", "Pan" };
   juce::Label analogFeelLabel{ "", "Analog Feel" };
   Slider levelSlider{ Level, 0, 127, 1, 96 };
-  Slider panSlider{ Pan, -64, 63, 1, true };
+  Slider panSlider{ Pan, -64, 63, 1, 0, true };
   Slider analogFeelSlider{ AnalogFeel, 0, 127, 1 };
 
   juce::Label bendRangeLabel{ "", "Bend Range" };
