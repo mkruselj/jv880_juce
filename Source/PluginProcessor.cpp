@@ -359,6 +359,12 @@ void VirtualJVProcessor::getStateInformation(
   status.masterTune = mcu->nvram[0x00];
   status.reverbEnabled = ((mcu->nvram[0x02] >> 0) & 1) == 1;
   status.chorusEnabled = ((mcu->nvram[0x02] >> 1) & 1) == 1;
+  status.scaleTuneEnabled = mcu->nvram[0x23];
+
+  for (int i = 0; i < 12; i++)
+  {
+      status.scale[i] = mcu->nvram[0x0104 + i];
+  }
   mcuLock.exit();
 
   destData.ensureSize(sizeof(DataToSave));
@@ -374,6 +380,12 @@ void VirtualJVProcessor::setStateInformation(const void *data,
   mcu->nvram[0x0d] |= 1 << 5; // LastSet
   mcu->nvram[0x00] = status.masterTune;
   mcu->nvram[0x02] = status.reverbEnabled | status.chorusEnabled << 1;
+  mcu->nvram[0x23] = status.scaleTuneEnabled;
+
+  for (int i = 0; i < 12; i ++)
+  {
+      mcu->nvram[0x0104 + i] = status.scale[i];
+  }
 
   if (expansionsDescr[status.currentExpansion] == nullptr) {
     mcuLock.exit();

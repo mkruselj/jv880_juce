@@ -46,37 +46,77 @@ public:
   void sendSysexPatchCommonParamChange(const uint8_t address, const uint8_t value);
 
 private:
+  enum EditSystemWidgets
+  {
+    ScaleTuneSwitch     = 10U,
+    PatchScaleC         = 11U,
+    PatchScaleCSharp    = 12U,
+    PatchScaleD         = 13U,
+    PatchScaleDSharp    = 14U,
+    PatchScaleE         = 15U,
+    PatchScaleF         = 16U,
+    PatchScaleFSharp    = 17U,
+    PatchScaleG         = 18U,
+    PatchScaleGSharp    = 19U,
+    PatchScaleA         = 20U,
+    PatchScaleASharp    = 21U,
+    PatchScaleB         = 22U,
+  };
+
   enum EditCommonWidgets
   {
-      PatchName           = 100U,
-      VelocitySwitch      = 101U,
+    PatchName           = 100U,
+    VelocitySwitch      = 101U,
 
-      ReverbType          = 110U,
-      ReverbLevel         = 111U,
-      ReverbTime          = 112U,
-      DelayFeedback       = 113U,
+    ReverbType          = 110U,
+    ReverbLevel         = 111U,
+    ReverbTime          = 112U,
+    DelayFeedback       = 113U,
 
-      ChorusType          = 120U,
-      ChorusLevel         = 121U,
-      ChorusDepth         = 122U,
-      ChorusRate          = 123U,
-      ChorusFeedback      = 124U,
-      ChorusOutput        = 125U,
+    ChorusType          = 120U,
+    ChorusLevel         = 121U,
+    ChorusDepth         = 122U,
+    ChorusRate          = 123U,
+    ChorusFeedback      = 124U,
+    ChorusOutput        = 125U,
 
-      AnalogFeel          = 130U,
-      Level               = 131U,
-      Pan                 = 132U,
+    AnalogFeel          = 130U,
+    Level               = 131U,
+    Pan                 = 132U,
 
-      BendRangeDown       = 140U,
-      BendRangeUp         = 141U,
-      KeyAssign           = 142U,
-      SoloLegato          = 143U,
-      Portamento          = 144U,
-      PortamentoMode      = 145U,
-      PortamentoType      = 146U,
-      PortamentoTime      = 147U,
+    BendRangeDown       = 140U,
+    BendRangeUp         = 141U,
+    KeyAssign           = 142U,
+    SoloLegato          = 143U,
+    Portamento          = 144U,
+    PortamentoMode      = 145U,
+    PortamentoType      = 146U,
+    PortamentoTime      = 147U,
   };
+
   VirtualJVProcessor &processor;
+
+  juce::Label levelLabel{ "", "Level" };
+  juce::Label panLabel{ "", "Pan" };
+  juce::Label analogFeelLabel{ "", "Analog Feel" };
+  Slider levelSlider{ Level, 0, 127, 1 };
+  Slider panSlider{ Pan, -64, 63, 1 };
+  Slider analogFeelSlider{ AnalogFeel, 0, 127, 1 };
+
+  juce::Label bendRangeLabel{ "", "Bend Range" };
+  juce::Label keyAssignLabel{ "", "Key Assign" };
+  juce::Label portamentoModeLabel{ "", "Mode" };
+  juce::Label portamentoTypeLabel{ "", "Type" };
+  juce::Label portamentoTimeLabel{ "", "Time" };
+  Slider bendRangeDownSlider{ BendRangeDown, -48, 0, 1 };
+  Slider bendRangeUpSlider{ BendRangeUp, 0, 12, 1 };
+  Menu keyAssignComboBox{ KeyAssign };
+  Button soloLegatoToggle{ SoloLegato, "Legato" };
+  Button portamentoToggle{ Portamento, "Portamento" };
+  Menu portamentoModeComboBox{ PortamentoMode };
+  Menu portamentoTypeComboBox{ PortamentoType };
+  Slider portamentoTimeSlider{ PortamentoTime, 0, 127, 1 };
+
 
   juce::Label patchNameLabel{ "", "Patch Name" };
   TextEdit patchNameEditor{ PatchName };
@@ -104,26 +144,32 @@ private:
   Slider chorusFeedbackSlider{ ChorusFeedback, 0, 127, 1 };
   Menu chorusOutputComboBox{ ChorusOutput };
 
-  juce::Label analogFeelLabel{ "", "Analog Feel" };
-  juce::Label levelLabel{ "", "Level" };
-  juce::Label panLabel{ "", "Pan" };
-  Slider analogFeelSlider{ AnalogFeel, 0, 127, 1 };
-  Slider levelSlider{ Level, 0, 127, 1 };
-  Slider panSlider{ Pan, 0, 127, 1 };
 
-  juce::Label bendRangeLabel{ "", "Bend Range" };
-  juce::Label keyAssignLabel{ "", "Key Assign" };
-  juce::Label portamentoModeLabel{ "", "Mode" };
-  juce::Label portamentoTypeLabel{ "", "Type" };
-  juce::Label portamentoTimeLabel{ "", "Time" };
-  Slider bendRangeDownSlider{ BendRangeDown, -48, 0, 1 };
-  Slider bendRangeUpSlider{ BendRangeUp, 0, 12, 1 };
-  Menu keyAssignComboBox{ KeyAssign };
-  Button soloLegatoToggle{ SoloLegato, "Legato" };
-  Button portamentoToggle{ Portamento, "Portamento" };
-  Menu portamentoModeComboBox{ PortamentoMode };
-  Menu portamentoTypeComboBox{ PortamentoType };
-  Slider portamentoTimeSlider{ PortamentoTime, 0, 127, 1 };
+  Button scaleTuneSwitch{ ScaleTuneSwitch, "Scale Tune" };
+  Slider patchScaleCSlider{ PatchScaleC, -64, 63, 1, true };
+  Slider patchScaleCSharpSlider{ PatchScaleCSharp, -64, 63, 1, true };
+  Slider patchScaleDSlider{ PatchScaleD, -64, 63, 1, true };
+  Slider patchScaleDSharpSlider{ PatchScaleDSharp, -64, 63, 1, true };
+  Slider patchScaleESlider{ PatchScaleE, -64, 63, 1, true };
+  Slider patchScaleFSlider{ PatchScaleF, -64, 63, 1, true };
+  Slider patchScaleFSharpSlider{ PatchScaleFSharp, -64, 63, 1, true };
+  Slider patchScaleGSlider{ PatchScaleG, -64, 63, 1, true };
+  Slider patchScaleGSharpSlider{ PatchScaleGSharp, -64, 63, 1, true };
+  Slider patchScaleASlider{ PatchScaleA, -64, 63, 1, true };
+  Slider patchScaleASharpSlider{ PatchScaleASharp, -64, 63, 1, true };
+  Slider patchScaleBSlider{ PatchScaleB, -64, 63, 1, true };
+  juce::Label patchScaleCLabel{ "", "C" };
+  juce::Label patchScaleCSharpLabel{ "", "C#" };
+  juce::Label patchScaleDLabel{ "", "D" };
+  juce::Label patchScaleDSharpLabel{ "", "D#" };
+  juce::Label patchScaleELabel{ "", "E" };
+  juce::Label patchScaleFLabel{ "", "F" };
+  juce::Label patchScaleFSharpLabel{ "", "F#" };
+  juce::Label patchScaleGLabel{ "", "G" };
+  juce::Label patchScaleGSharpLabel{ "", "G#" };
+  juce::Label patchScaleALabel{ "", "A" };
+  juce::Label patchScaleASharpLabel{ "", "A#" };
+  juce::Label patchScaleBLabel{ "", "B" };
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EditCommonTab)
 };

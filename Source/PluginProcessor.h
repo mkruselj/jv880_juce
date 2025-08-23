@@ -78,14 +78,20 @@ public:
 
     struct DataToSave
     {
-        int8_t masterTune = 0;
-        bool reverbEnabled = 1;
-        bool chorusEnabled = 1;
+        int8_t masterTune{0};
 
-        int currentExpansion = 0;
+        bool reverbEnabled{1};
+        bool chorusEnabled{1};
+
+        int currentExpansion{0};
         bool isDrums = false;
+
         uint8_t patch[0x16a] = {0};
         uint8_t drums[0xa7c] = {0};
+
+        bool scaleTuneEnabled{ 0 };
+
+        uint8_t scale[12] = { 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64 };
     };
 
     DataToSave status;

@@ -14,10 +14,74 @@
 //==============================================================================
 EditCommonTab::EditCommonTab(VirtualJVProcessor& p) : processor (p)
 {
+    addAndMakeVisible(levelSlider);
+    levelSlider.addListener(this);
+
+    addAndMakeVisible(levelLabel);
+    levelLabel.attachToComponent(&levelSlider, true);
+
+    addAndMakeVisible(panSlider);
+    panSlider.addListener(this);
+
+    addAndMakeVisible(panLabel);
+    panLabel.attachToComponent(&panSlider, true);
+
+    addAndMakeVisible(analogFeelSlider);
+    analogFeelSlider.addListener(this);
+
+    addAndMakeVisible(analogFeelLabel);
+    analogFeelLabel.attachToComponent(&analogFeelSlider, true);
+
+    addAndMakeVisible(bendRangeDownSlider);
+    bendRangeDownSlider.addListener(this);
+
+    addAndMakeVisible(bendRangeLabel);
+    bendRangeLabel.attachToComponent(&bendRangeDownSlider, true);
+
+    addAndMakeVisible(bendRangeUpSlider);
+    bendRangeUpSlider.addListener(this);
+
+    addAndMakeVisible(keyAssignLabel);
+    keyAssignLabel.attachToComponent(&keyAssignComboBox, true);
+
+    addAndMakeVisible(keyAssignComboBox);
+    keyAssignComboBox.addListener(this);
+    keyAssignComboBox.addItem("Poly", 1);
+    keyAssignComboBox.addItem("Solo", 2);
+
+    addAndMakeVisible(soloLegatoToggle);
+    soloLegatoToggle.addListener(this);
+
+    addAndMakeVisible(portamentoToggle);
+    portamentoToggle.addListener(this);
+
+    addAndMakeVisible(portamentoModeLabel);
+    portamentoModeLabel.attachToComponent(&portamentoModeComboBox, true);
+
+    addAndMakeVisible(portamentoModeComboBox);
+    portamentoModeComboBox.addListener(this);
+    portamentoModeComboBox.addItem("Legato", 1);
+    portamentoModeComboBox.addItem("Normal", 2);
+
+    addAndMakeVisible(portamentoTypeLabel);
+    portamentoTypeLabel.attachToComponent(&portamentoTypeComboBox, true);
+
+    addAndMakeVisible(portamentoTypeComboBox);
+    portamentoTypeComboBox.addListener(this);
+    portamentoTypeComboBox.addItem("Time", 1);
+    portamentoTypeComboBox.addItem("Rate", 2);
+
+    addAndMakeVisible(portamentoTimeSlider);
+    portamentoTimeSlider.addListener(this);
+
+    addAndMakeVisible(portamentoTimeLabel);
+    portamentoTimeLabel.attachToComponent(&portamentoTimeSlider, true);
+
+
     addAndMakeVisible(patchNameEditor);
     patchNameEditor.addListener(this);
     patchNameEditor.setInputRestrictions(MAX_PATCH_NAME_CHARS,
-                                         " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-*/#!,.");
+        " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-*/#!,.");
     addAndMakeVisible(patchNameLabel);
     patchNameLabel.attachToComponent(&patchNameEditor, true);
 
@@ -97,68 +161,58 @@ EditCommonTab::EditCommonTab(VirtualJVProcessor& p) : processor (p)
     chorusOutputComboBox.addItem("Mix", 1);
     chorusOutputComboBox.addItem("Reverb", 2);
 
-    addAndMakeVisible(analogFeelSlider);
-    analogFeelSlider.addListener(this);
 
-    addAndMakeVisible(analogFeelLabel);
-    analogFeelLabel.attachToComponent(&analogFeelSlider, true);
+    addAndMakeVisible(scaleTuneSwitch);
+    scaleTuneSwitch.addListener(this);
+    addAndMakeVisible(patchScaleCSlider);
+    patchScaleCSlider.addListener(this);
+    addAndMakeVisible(patchScaleCSharpSlider);
+    patchScaleCSharpSlider.addListener(this);
+    addAndMakeVisible(patchScaleDSlider);
+    patchScaleDSlider.addListener(this);
+    addAndMakeVisible(patchScaleDSharpSlider);
+    patchScaleDSharpSlider.addListener(this);
+    addAndMakeVisible(patchScaleESlider);
+    patchScaleESlider.addListener(this);
+    addAndMakeVisible(patchScaleFSlider);
+    patchScaleFSlider.addListener(this);
+    addAndMakeVisible(patchScaleFSharpSlider);
+    patchScaleFSharpSlider.addListener(this);
+    addAndMakeVisible(patchScaleGSlider);
+    patchScaleGSlider.addListener(this);
+    addAndMakeVisible(patchScaleGSharpSlider);
+    patchScaleGSharpSlider.addListener(this);
+    addAndMakeVisible(patchScaleASlider);
+    patchScaleASlider.addListener(this);
+    addAndMakeVisible(patchScaleASharpSlider);
+    patchScaleASharpSlider.addListener(this);
+    addAndMakeVisible(patchScaleBSlider);
+    patchScaleBSlider.addListener(this);
 
-    addAndMakeVisible(levelSlider);
-    levelSlider.addListener(this);
-
-    addAndMakeVisible(levelLabel);
-    levelLabel.attachToComponent(&levelSlider, true);
-
-    addAndMakeVisible(panSlider);
-    panSlider.addListener(this);
-
-    addAndMakeVisible(panLabel);
-    panLabel.attachToComponent(&panSlider, true);
-
-    addAndMakeVisible(bendRangeDownSlider);
-    bendRangeDownSlider.addListener(this);
-
-    addAndMakeVisible(bendRangeLabel);
-    bendRangeLabel.attachToComponent(&bendRangeDownSlider, true);
-
-    addAndMakeVisible(bendRangeUpSlider);
-    bendRangeUpSlider.addListener(this);
-
-    addAndMakeVisible(keyAssignLabel);
-    keyAssignLabel.attachToComponent(&keyAssignComboBox, true);
-
-    addAndMakeVisible(keyAssignComboBox);
-    keyAssignComboBox.addListener(this);
-    keyAssignComboBox.addItem("Poly", 1);
-    keyAssignComboBox.addItem("Solo", 2);
-
-    addAndMakeVisible(soloLegatoToggle);
-    soloLegatoToggle.addListener(this);
-
-    addAndMakeVisible(portamentoToggle);
-    portamentoToggle.addListener(this);
-
-    addAndMakeVisible(portamentoModeLabel);
-    portamentoModeLabel.attachToComponent(&portamentoModeComboBox, true);
-
-    addAndMakeVisible(portamentoModeComboBox);
-    portamentoModeComboBox.addListener(this);
-    portamentoModeComboBox.addItem("Legato", 1);
-    portamentoModeComboBox.addItem("Normal", 2);
-
-    addAndMakeVisible(portamentoTypeLabel);
-    portamentoTypeLabel.attachToComponent(&portamentoTypeComboBox, true);
-
-    addAndMakeVisible(portamentoTypeComboBox);
-    portamentoTypeComboBox.addListener(this);
-    portamentoTypeComboBox.addItem("Time", 1);
-    portamentoTypeComboBox.addItem("Rate", 2);
-
-    addAndMakeVisible(portamentoTimeSlider);
-    portamentoTimeSlider.addListener(this);
-
-    addAndMakeVisible(portamentoTimeLabel);
-    portamentoTimeLabel.attachToComponent(&portamentoTimeSlider, true);
+    addAndMakeVisible(patchScaleCLabel);
+    patchScaleCLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleCSharpLabel);
+    patchScaleCSharpLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleDLabel);
+    patchScaleDLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleDSharpLabel);
+    patchScaleDSharpLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleELabel);
+    patchScaleELabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleFLabel);
+    patchScaleFLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleFSharpLabel);
+    patchScaleFSharpLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleGLabel);
+    patchScaleGLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleGSharpLabel);
+    patchScaleGSharpLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleALabel);
+    patchScaleALabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleASharpLabel);
+    patchScaleASharpLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(patchScaleBLabel);
+    patchScaleBLabel.setJustificationType(juce::Justification::centred);
 }
 
 EditCommonTab::~EditCommonTab()
@@ -167,8 +221,20 @@ EditCommonTab::~EditCommonTab()
 
 void EditCommonTab::updateValues()
 {
-    Patch* patch = (Patch*) processor.status.patch;
+    auto system = &processor.status;
+    auto patch = (Patch*)processor.status.patch;
 
+    levelSlider             .setValue(patch->level, juce::dontSendNotification);
+    panSlider               .setValue(patch->pan - 64, juce::dontSendNotification);
+    analogFeelSlider        .setValue(patch->analogFeel, juce::dontSendNotification);
+    bendRangeDownSlider     .setValue(((patch->bendRange) & 0x3f) - 64, juce::dontSendNotification);
+    bendRangeUpSlider       .setValue(patch->flags & 0xf, juce::dontSendNotification);
+    keyAssignComboBox       .setSelectedItemIndex((patch->flags & 0x80) != 0, juce::dontSendNotification);
+    soloLegatoToggle        .setToggleState((patch->flags & 0x20) != 0, juce::dontSendNotification);
+    portamentoToggle        .setToggleState((patch->flags & 0x40) != 0, juce::dontSendNotification);
+    portamentoModeComboBox  .setSelectedItemIndex((patch->flags & 0x10) != 0, juce::dontSendNotification);
+    portamentoTypeComboBox  .setSelectedItemIndex((patch->portamentoTime & 0x80) != 0, juce::dontSendNotification);
+    portamentoTimeSlider    .setValue(patch->portamentoTime & 0x7f, juce::dontSendNotification);
     patchNameEditor         .setText(juce::String(patch->name, 0xc), juce::dontSendNotification);
     velocitySwitchToggle    .setToggleState((patch->recChorConfig & 0x80) != 0, juce::dontSendNotification);
     reverbTypeComboBox      .setSelectedItemIndex(patch->recChorConfig & 0x7, juce::dontSendNotification);
@@ -181,59 +247,93 @@ void EditCommonTab::updateValues()
     chorusRateSlider        .setValue(patch->chorusRate, juce::dontSendNotification);
     chorusFeedbackSlider    .setValue(patch->chorusFeedback, juce::dontSendNotification);
     chorusOutputComboBox    .setSelectedItemIndex((patch->chorusLevel & 0x80) != 0, juce::dontSendNotification);
-    analogFeelSlider        .setValue(patch->analogFeel, juce::dontSendNotification);
-    levelSlider             .setValue(patch->level, juce::dontSendNotification);
-    panSlider               .setValue(patch->pan, juce::dontSendNotification);
-    bendRangeDownSlider     .setValue(((patch->bendRange) & 0x3f) - 64, juce::dontSendNotification);
-    bendRangeUpSlider       .setValue(patch->flags & 0xf, juce::dontSendNotification);
-    keyAssignComboBox       .setSelectedItemIndex((patch->flags & 0x80) != 0, juce::dontSendNotification);
-    soloLegatoToggle        .setToggleState((patch->flags & 0x20) != 0, juce::dontSendNotification);
-    portamentoToggle        .setToggleState((patch->flags & 0x40) != 0, juce::dontSendNotification);
-    portamentoModeComboBox  .setSelectedItemIndex((patch->flags & 0x10) != 0, juce::dontSendNotification);
-    portamentoTypeComboBox  .setSelectedItemIndex((patch->portamentoTime & 0x80) != 0, juce::dontSendNotification);
-    portamentoTimeSlider    .setValue(patch->portamentoTime & 0x7f, juce::dontSendNotification);
+
+    scaleTuneSwitch         .setToggleState((system->scaleTuneEnabled) != 0, juce::dontSendNotification);
+    patchScaleCSlider       .setValue(system->scale[0] - 64, juce::dontSendNotification);
+    patchScaleCSharpSlider  .setValue(system->scale[1] - 64, juce::dontSendNotification);
+    patchScaleDSlider       .setValue(system->scale[2] - 64, juce::dontSendNotification);
+    patchScaleDSharpSlider  .setValue(system->scale[3] - 64, juce::dontSendNotification);
+    patchScaleESlider       .setValue(system->scale[4] - 64, juce::dontSendNotification);
+    patchScaleFSlider       .setValue(system->scale[5] - 64, juce::dontSendNotification);
+    patchScaleFSharpSlider  .setValue(system->scale[6] - 64, juce::dontSendNotification);
+    patchScaleGSlider       .setValue(system->scale[7] - 64, juce::dontSendNotification);
+    patchScaleGSharpSlider  .setValue(system->scale[8] - 64, juce::dontSendNotification);
+    patchScaleASlider       .setValue(system->scale[9] - 64, juce::dontSendNotification);
+    patchScaleASharpSlider  .setValue(system->scale[10] - 64, juce::dontSendNotification);
+    patchScaleBSlider       .setValue(system->scale[11] - 64, juce::dontSendNotification);
 }
 
 void EditCommonTab::resized()
 {
     const auto top = 30;
-    const auto sliderLeft1 = 120;
+    const auto sliderLeft1 = 100;
     const auto width = getWidth() / 2 - sliderLeft1 - 10;
     const auto halfWidth = width / 2;
     const auto sliderLeft2 = getWidth() / 2 + sliderLeft1 + 0;
     const auto height = 24;
+    const auto vertWidth = 28;
+    const auto vertHeight = 96;
+    const auto labelVOffset = vertHeight + 4;
     const auto vMargin = 24;
 
-    patchNameEditor        .setBounds(sliderLeft1, top + height * 0 + vMargin * 0, halfWidth, height);
-    velocitySwitchToggle   .setBounds(sliderLeft1 + halfWidth, top + height * 0 + vMargin * 0, halfWidth, height);
+    levelSlider            .setBounds(sliderLeft1, top + height * 0 + vMargin * 0, width, height);
+    panSlider              .setBounds(sliderLeft1, top + height * 1 + vMargin * 0, width, height);
 
-    reverbTypeComboBox     .setBounds(sliderLeft1, top + height * 1 + vMargin * 1, width, height);
-    reverbLevelSlider      .setBounds(sliderLeft1, top + height * 2 + vMargin * 1, width, height);
-    reverbTimeSlider       .setBounds(sliderLeft1, top + height * 3 + vMargin * 1, width, height);
-    delayFeedbackSlider    .setBounds(sliderLeft1, top + height * 4 + vMargin * 1, width, height);
+    analogFeelSlider       .setBounds(sliderLeft1, top + height * 2 + vMargin * 1, width, height);
 
-    chorusTypeComboBox     .setBounds(sliderLeft1, top + height * 5 + vMargin * 2, width, height);
-    chorusLevelSlider      .setBounds(sliderLeft1, top + height * 6 + vMargin * 2, width, height);
-    chorusDepthSlider      .setBounds(sliderLeft1, top + height * 7 + vMargin * 2, width, height);
-    chorusRateSlider       .setBounds(sliderLeft1, top + height * 8 + vMargin * 2, width, height);
-    chorusFeedbackSlider   .setBounds(sliderLeft1, top + height * 9 + vMargin * 2, width, height);
-    chorusOutputComboBox   .setBounds(sliderLeft1, top + height * 10 + vMargin * 2, width, height);
+    bendRangeDownSlider    .setBounds(sliderLeft1, top + height * 3 + vMargin * 2, halfWidth, height);
+    bendRangeUpSlider      .setBounds(sliderLeft1 + halfWidth, top + height * 3 + vMargin * 2, halfWidth, height);
 
-    levelSlider            .setBounds(sliderLeft2, top + height * 0 + vMargin * 0, width, height);
-    panSlider              .setBounds(sliderLeft2, top + height * 1 + vMargin * 0, width, height);
+    keyAssignComboBox      .setBounds(sliderLeft1, top + height * 4 + vMargin * 3, halfWidth, height);
+    soloLegatoToggle       .setBounds(sliderLeft1 + halfWidth, top + height * 4 + vMargin * 3, halfWidth, height);
 
-    analogFeelSlider       .setBounds(sliderLeft2, top + height * 2 + vMargin * 1, width, height);
+    portamentoToggle       .setBounds(sliderLeft1, top + height * 5 + vMargin * 4, width, height);
+    portamentoModeComboBox .setBounds(sliderLeft1, top + height * 6 + vMargin * 4, width, height);
+    portamentoTypeComboBox .setBounds(sliderLeft1, top + height * 7 + vMargin * 4, width, height);
+    portamentoTimeSlider   .setBounds(sliderLeft1, top + height * 8 + vMargin * 4, width, height);
 
-    bendRangeDownSlider    .setBounds(sliderLeft2, top + height * 3 + vMargin * 2, halfWidth, height);
-    bendRangeUpSlider      .setBounds(sliderLeft2 + halfWidth, top + height * 3 + vMargin * 2, halfWidth, height);
 
-    keyAssignComboBox      .setBounds(sliderLeft2, top + height * 4 + vMargin * 3, halfWidth, height);
-    soloLegatoToggle       .setBounds(sliderLeft2 + halfWidth, top + height * 4 + vMargin * 3, halfWidth, height);
+    patchNameEditor        .setBounds(sliderLeft2, top + height * 0 + vMargin * 0, halfWidth, height);
+    velocitySwitchToggle   .setBounds(sliderLeft2 + halfWidth, top + height * 0 + vMargin * 0, halfWidth, height);
 
-    portamentoToggle       .setBounds(sliderLeft2, top + height * 5 + vMargin * 4, width, height);
-    portamentoModeComboBox .setBounds(sliderLeft2, top + height * 6 + vMargin * 4, width, height);
-    portamentoTypeComboBox .setBounds(sliderLeft2, top + height * 7 + vMargin * 4, width, height);
-    portamentoTimeSlider   .setBounds(sliderLeft2, top + height * 8 + vMargin * 4, width, height);
+    reverbTypeComboBox     .setBounds(sliderLeft2, top + height * 1 + vMargin * 1, width, height);
+    reverbLevelSlider      .setBounds(sliderLeft2, top + height * 2 + vMargin * 1, width, height);
+    reverbTimeSlider       .setBounds(sliderLeft2, top + height * 3 + vMargin * 1, width, height);
+    delayFeedbackSlider    .setBounds(sliderLeft2, top + height * 4 + vMargin * 1, width, height);
+
+    chorusTypeComboBox     .setBounds(sliderLeft2, top + height * 5 + vMargin * 2, width, height);
+    chorusLevelSlider      .setBounds(sliderLeft2, top + height * 6 + vMargin * 2, width, height);
+    chorusDepthSlider      .setBounds(sliderLeft2, top + height * 7 + vMargin * 2, width, height);
+    chorusRateSlider       .setBounds(sliderLeft2, top + height * 8 + vMargin * 2, width, height);
+    chorusFeedbackSlider   .setBounds(sliderLeft2, top + height * 9 + vMargin * 2, width, height);
+    chorusOutputComboBox   .setBounds(sliderLeft2, top + height * 10 + vMargin * 2, width, height);
+
+    scaleTuneSwitch        .setBounds(sliderLeft1, top + height * 9 + vMargin * 6, halfWidth, height);
+    patchScaleCSlider      .setBounds(sliderLeft1 - 37 + (vertWidth * 0), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleCSharpSlider .setBounds(sliderLeft1 - 37 + (vertWidth * 1), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleDSlider      .setBounds(sliderLeft1 - 37 + (vertWidth * 2), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleDSharpSlider .setBounds(sliderLeft1 - 37 + (vertWidth * 3), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleESlider      .setBounds(sliderLeft1 - 37 + (vertWidth * 4), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleFSlider      .setBounds(sliderLeft1 - 37 + (vertWidth * 5), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleFSharpSlider .setBounds(sliderLeft1 - 37 + (vertWidth * 6), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleGSlider      .setBounds(sliderLeft1 - 37 + (vertWidth * 7), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleGSharpSlider .setBounds(sliderLeft1 - 37 + (vertWidth * 8), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleASlider      .setBounds(sliderLeft1 - 37 + (vertWidth * 9), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleASharpSlider .setBounds(sliderLeft1 - 37 + (vertWidth * 10), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+    patchScaleBSlider      .setBounds(sliderLeft1 - 37 + (vertWidth * 11), top + height * 10 + vMargin * 6, vertWidth, vertHeight);
+
+    patchScaleCLabel       .setBounds(patchScaleCSlider.getX(), patchScaleCSlider.getY() + labelVOffset, patchScaleCSlider.getWidth(), 14);
+    patchScaleCSharpLabel  .setBounds(patchScaleCSharpSlider.getX(), patchScaleCSharpSlider.getY() + labelVOffset, patchScaleCSharpSlider.getWidth(), 14);
+    patchScaleDLabel       .setBounds(patchScaleDSlider.getX(), patchScaleDSlider.getY() + labelVOffset, patchScaleDSlider.getWidth(), 14);
+    patchScaleDSharpLabel  .setBounds(patchScaleDSharpSlider.getX(), patchScaleDSharpSlider.getY() + labelVOffset, patchScaleDSharpSlider.getWidth(), 14);
+    patchScaleELabel       .setBounds(patchScaleESlider.getX(), patchScaleESlider.getY() + labelVOffset, patchScaleESlider.getWidth(), 14);
+    patchScaleFLabel       .setBounds(patchScaleFSlider.getX(), patchScaleFSlider.getY() + labelVOffset, patchScaleFSlider.getWidth(), 14);
+    patchScaleFSharpLabel  .setBounds(patchScaleFSharpSlider.getX(), patchScaleFSharpSlider.getY() + labelVOffset, patchScaleFSharpSlider.getWidth(), 14);
+    patchScaleGLabel       .setBounds(patchScaleGSlider.getX(), patchScaleGSlider.getY() + labelVOffset, patchScaleGSlider.getWidth(), 14);
+    patchScaleGSharpLabel  .setBounds(patchScaleGSharpSlider.getX(), patchScaleGSharpSlider.getY() + labelVOffset, patchScaleGSharpSlider.getWidth(), 14);
+    patchScaleALabel       .setBounds(patchScaleASlider.getX(), patchScaleASlider.getY() + labelVOffset, patchScaleASlider.getWidth(), 14);
+    patchScaleASharpLabel  .setBounds(patchScaleASharpSlider.getX(), patchScaleASharpSlider.getY() + labelVOffset, patchScaleASharpSlider.getWidth(), 14);
+    patchScaleBLabel       .setBounds(patchScaleBSlider.getX(), patchScaleBSlider.getY() + labelVOffset, patchScaleBSlider.getWidth(), 14);
 }
 
 void EditCommonTab::sliderValueChanged(juce::Slider* slider)
@@ -245,54 +345,66 @@ void EditCommonTab::sliderValueChanged(juce::Slider* slider)
         id = i->getID();
     }
 
-    Patch* patch = (Patch*)processor.status.patch;
+    auto system = &processor.status;
+    auto patch = (Patch*)processor.status.patch;
+    uint8_t value = 0U;
 
     switch (id)
     {
     case ReverbLevel:
-        sendSysexPatchCommonParamChange(0x0e, uint8_t(reverbLevelSlider.getValue()));
-        patch->reverbLevel = uint8_t(reverbLevelSlider.getValue());
+        value = reverbLevelSlider.getValue();
+        sendSysexPatchCommonParamChange(0x0e, value);
+        patch->reverbLevel = value;
         break;
     case ReverbTime:
-        sendSysexPatchCommonParamChange(0x0f, uint8_t(reverbTimeSlider.getValue()));
-        patch->reverbTime = uint8_t(reverbTimeSlider.getValue());
+        value = reverbTimeSlider.getValue();
+        sendSysexPatchCommonParamChange(0x0f, value);
+        patch->reverbTime = value;
         break;
     case DelayFeedback:
-        sendSysexPatchCommonParamChange(0x10, uint8_t(delayFeedbackSlider.getValue()));
-        patch->reverbFeedback = uint8_t(delayFeedbackSlider.getValue());
+        value = delayFeedbackSlider.getValue();
+        sendSysexPatchCommonParamChange(0x10, value);
+        patch->reverbFeedback = value;
         break;
     case ChorusLevel:
-        sendSysexPatchCommonParamChange(0x12, uint8_t(chorusLevelSlider.getValue()));
-        patch->chorusLevel = uint8_t(chorusLevelSlider.getValue()
-                                     + (chorusOutputComboBox.getSelectedItemIndex() << 7));
+        value = chorusLevelSlider.getValue();
+        sendSysexPatchCommonParamChange(0x12, value);
+        patch->chorusLevel = uint8_t(value + (chorusOutputComboBox.getSelectedItemIndex() << 7));
         break;
     case ChorusDepth:
-        sendSysexPatchCommonParamChange(0x13, uint8_t(chorusDepthSlider.getValue()));
-        patch->chorusDepth = uint8_t(chorusDepthSlider.getValue());
+        value = chorusDepthSlider.getValue();
+        sendSysexPatchCommonParamChange(0x13, value);
+        patch->chorusDepth = value;
         break;
     case ChorusRate:
-        sendSysexPatchCommonParamChange(0x14, uint8_t(chorusRateSlider.getValue()));
-        patch->chorusRate = uint8_t(chorusRateSlider.getValue());
+        value = chorusRateSlider.getValue();
+        sendSysexPatchCommonParamChange(0x14, value);
+        patch->chorusRate = value;
         break;
     case ChorusFeedback:
-        sendSysexPatchCommonParamChange(0x15, uint8_t(chorusFeedbackSlider.getValue()));
-        patch->chorusFeedback = uint8_t(chorusFeedbackSlider.getValue());
+        value = chorusFeedbackSlider.getValue();
+        sendSysexPatchCommonParamChange(0x15, value);
+        patch->chorusFeedback = value;
         break;
     case AnalogFeel:
-        sendSysexPatchCommonParamChange(0x17, uint8_t(analogFeelSlider.getValue()));
-        patch->analogFeel = uint8_t(analogFeelSlider.getValue());
+        value = analogFeelSlider.getValue();
+        sendSysexPatchCommonParamChange(0x17, value);
+        patch->analogFeel = value;
         break;
     case Level:
-        sendSysexPatchCommonParamChange(0x18, uint8_t(levelSlider.getValue()));
-        patch->level = uint8_t(levelSlider.getValue());
+        value = levelSlider.getValue();
+        sendSysexPatchCommonParamChange(0x18, value);
+        patch->level = value;
         break;
     case Pan:
-        sendSysexPatchCommonParamChange(0x19, uint8_t(panSlider.getValue()));
-        patch->pan = uint8_t(panSlider.getValue());
+        value = panSlider.getValue() + 64;
+        sendSysexPatchCommonParamChange(0x19, value);
+        patch->pan = value;
         break;
     case BendRangeDown:
-        sendSysexPatchCommonParamChange(0x1a, uint8_t(bendRangeDownSlider.getValue()));
-        patch->bendRange = uint8_t(bendRangeDownSlider.getValue() + 64);
+        value = bendRangeDownSlider.getValue() + 64;
+        sendSysexPatchCommonParamChange(0x1a, value);
+        patch->bendRange = value;
         break;
     case BendRangeUp:
         sendSysexPatchCommonParamChange(0x1b, uint8_t(bendRangeUpSlider.getValue()));
@@ -306,6 +418,66 @@ void EditCommonTab::sliderValueChanged(juce::Slider* slider)
         sendSysexPatchCommonParamChange(0x21, uint8_t(portamentoTimeSlider.getValue()));
         patch->portamentoTime = uint8_t(portamentoTimeSlider.getValue()
                                         + (portamentoTypeComboBox.getSelectedItemIndex() << 7));
+        break;
+    case PatchScaleC:
+        value = patchScaleCSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x0104, value);
+        system->scale[0] = value;
+        break;
+    case PatchScaleCSharp:
+        value = patchScaleCSharpSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x0105, value);
+        system->scale[1] = value;
+        break;
+    case PatchScaleD:
+        value = patchScaleDSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x0106, value);
+        system->scale[2] = value;
+        break;
+    case PatchScaleDSharp:
+        value = patchScaleDSharpSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x0107, value);
+        system->scale[3] = value;
+        break;
+    case PatchScaleE:
+        value = patchScaleESlider.getValue() + 64;
+        processor.sendSysexParamChange(0x0108, value);
+        system->scale[4] = value;
+        break;
+    case PatchScaleF:
+        value = patchScaleFSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x0109, value);
+        system->scale[5] = value;
+        break;
+    case PatchScaleFSharp:
+        value = patchScaleFSharpSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x010A, value);
+        system->scale[6] = value;
+        break;
+    case PatchScaleG:
+        value = patchScaleGSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x010B, value);
+        system->scale[7] = value;
+        break;
+    case PatchScaleGSharp:
+        value = patchScaleGSharpSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x010C, value);
+        system->scale[8] = value;
+        break;
+    case PatchScaleA:
+        value = patchScaleASlider.getValue() + 64;
+        processor.sendSysexParamChange(0x010D, value);
+        system->scale[9] = value;
+        break;
+    case PatchScaleASharp:
+        value = patchScaleASharpSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x010E, value);
+        system->scale[10] = value;
+        break;
+    case PatchScaleB:
+        value = patchScaleBSlider.getValue() + 64;
+        processor.sendSysexParamChange(0x010F, value);
+        system->scale[11] = value;
         break;
     default:
         break;
@@ -321,7 +493,8 @@ void EditCommonTab::buttonClicked(juce::Button* button)
         id = i->getID();
     }
 
-    Patch* patch = (Patch*)processor.status.patch;
+    auto system = &processor.status;
+    auto patch = (Patch*)processor.status.patch;
 
     switch (id)
     {
@@ -347,6 +520,10 @@ void EditCommonTab::buttonClicked(juce::Button* button)
                                + (portamentoToggle.getToggleState() << 6)
                                + (keyAssignComboBox.getSelectedItemIndex() << 7));
         break;
+    case ScaleTuneSwitch:
+        processor.sendSysexParamChange(0x23, scaleTuneSwitch.getToggleStateValue() == 1);
+        system->scaleTuneEnabled = uint8_t(scaleTuneSwitch.getToggleStateValue() == 1);
+        break;
     default:
         break;
     }
@@ -361,7 +538,7 @@ void EditCommonTab::comboBoxChanged(juce::ComboBox* comboBox)
         id = i->getID();
     }
 
-    Patch* patch = (Patch*) processor.status.patch;
+    auto patch = (Patch*) processor.status.patch;
 
     switch (id)
     {
@@ -411,7 +588,9 @@ void EditCommonTab::comboBoxChanged(juce::ComboBox* comboBox)
 void EditCommonTab::textEditorTextChanged (juce::TextEditor& textEditor)
 {
     if (&textEditor == &patchNameEditor)
+    {
         sendSysexPatchNameChange();
+    }
 }
 
 void EditCommonTab::sendSysexPatchNameChange()
