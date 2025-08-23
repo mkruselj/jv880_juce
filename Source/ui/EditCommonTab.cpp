@@ -46,8 +46,8 @@ EditCommonTab::EditCommonTab(VirtualJVProcessor& p) : processor (p)
 
     addAndMakeVisible(keyAssignComboBox);
     keyAssignComboBox.addListener(this);
-    keyAssignComboBox.addItem("Poly", 1);
-    keyAssignComboBox.addItem("Solo", 2);
+    keyAssignComboBox.addItem("Polyphonic", 1);
+    keyAssignComboBox.addItem("Monophonic", 2);
 
     addAndMakeVisible(soloLegatoToggle);
     soloLegatoToggle.addListener(this);

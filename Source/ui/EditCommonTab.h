@@ -99,8 +99,8 @@ private:
   juce::Label levelLabel{ "", "Level" };
   juce::Label panLabel{ "", "Pan" };
   juce::Label analogFeelLabel{ "", "Analog Feel" };
-  Slider levelSlider{ Level, 0, 127, 1 };
-  Slider panSlider{ Pan, -64, 63, 1 };
+  Slider levelSlider{ Level, 0, 127, 1, 96 };
+  Slider panSlider{ Pan, -64, 63, 1, true };
   Slider analogFeelSlider{ AnalogFeel, 0, 127, 1 };
 
   juce::Label bendRangeLabel{ "", "Bend Range" };
@@ -108,12 +108,12 @@ private:
   juce::Label portamentoModeLabel{ "", "Mode" };
   juce::Label portamentoTypeLabel{ "", "Type" };
   juce::Label portamentoTimeLabel{ "", "Time" };
-  Slider bendRangeDownSlider{ BendRangeDown, -48, 0, 1 };
-  Slider bendRangeUpSlider{ BendRangeUp, 0, 12, 1 };
-  Menu keyAssignComboBox{ KeyAssign };
+  Slider bendRangeDownSlider{ BendRangeDown, -48, 0, 1, -2 };
+  Slider bendRangeUpSlider{ BendRangeUp, 0, 12, 1, 2 };
+  Menu keyAssignComboBox{ KeyAssign, 0 };
   Button soloLegatoToggle{ SoloLegato, "Legato" };
   Button portamentoToggle{ Portamento, "Portamento" };
-  Menu portamentoModeComboBox{ PortamentoMode };
+  Menu portamentoModeComboBox{ PortamentoMode, 1 };
   Menu portamentoTypeComboBox{ PortamentoType };
   Slider portamentoTimeSlider{ PortamentoTime, 0, 127, 1 };
 
@@ -126,10 +126,10 @@ private:
   juce::Label reverbLevelLabel{ "", "Level" };
   juce::Label reverbTimeLabel{ "", "Time" };
   juce::Label delayFeedbackLabel{ "", "Feedback" };
-  Menu reverbTypeComboBox{ ReverbType };
-  Slider reverbLevelSlider{ ReverbLevel, 0, 127, 1 };
-  Slider reverbTimeSlider{ ReverbTime, 0, 127, 1 };
-  Slider delayFeedbackSlider{ DelayFeedback, 0, 127, 1 };;
+  Menu reverbTypeComboBox{ ReverbType, 4 };
+  Slider reverbLevelSlider{ ReverbLevel, 0, 127, 1, 64 };
+  Slider reverbTimeSlider{ ReverbTime, 0, 127, 1, 64 };
+  Slider delayFeedbackSlider{ DelayFeedback, 0, 127, 1, 64 };;
 
   juce::Label chorusTypeLabel{ "", "Chorus" };
   juce::Label chorusLevelLabel{ "", "Level" };
@@ -137,27 +137,26 @@ private:
   juce::Label chorusRateLabel{ "", "Rate" };
   juce::Label chorusFeedbackLabel{ "", "Feedback" };
   juce::Label chorusOutputLabel{ "", "Output" };
-  Menu chorusTypeComboBox{ ChorusType };
-  Slider chorusLevelSlider{ ChorusLevel, 0, 127, 1 };
-  Slider chorusDepthSlider{ ChorusDepth, 0, 127, 1 };
-  Slider chorusRateSlider{ ChorusRate, 0, 127, 1 };
+  Menu chorusTypeComboBox{ ChorusType, 1 };
+  Slider chorusLevelSlider{ ChorusLevel, 0, 127, 1, 64 };
+  Slider chorusDepthSlider{ ChorusDepth, 0, 127, 1, 64 };
+  Slider chorusRateSlider{ ChorusRate, 0, 127, 1, 32 };
   Slider chorusFeedbackSlider{ ChorusFeedback, 0, 127, 1 };
   Menu chorusOutputComboBox{ ChorusOutput };
 
-
   Button scaleTuneSwitch{ ScaleTuneSwitch, "Scale Tune" };
-  Slider patchScaleCSlider{ PatchScaleC, -64, 63, 1, true };
-  Slider patchScaleCSharpSlider{ PatchScaleCSharp, -64, 63, 1, true };
-  Slider patchScaleDSlider{ PatchScaleD, -64, 63, 1, true };
-  Slider patchScaleDSharpSlider{ PatchScaleDSharp, -64, 63, 1, true };
-  Slider patchScaleESlider{ PatchScaleE, -64, 63, 1, true };
-  Slider patchScaleFSlider{ PatchScaleF, -64, 63, 1, true };
-  Slider patchScaleFSharpSlider{ PatchScaleFSharp, -64, 63, 1, true };
-  Slider patchScaleGSlider{ PatchScaleG, -64, 63, 1, true };
-  Slider patchScaleGSharpSlider{ PatchScaleGSharp, -64, 63, 1, true };
-  Slider patchScaleASlider{ PatchScaleA, -64, 63, 1, true };
-  Slider patchScaleASharpSlider{ PatchScaleASharp, -64, 63, 1, true };
-  Slider patchScaleBSlider{ PatchScaleB, -64, 63, 1, true };
+  Slider patchScaleCSlider{ PatchScaleC, -64, 63, 1, 0, true, true };
+  Slider patchScaleCSharpSlider{ PatchScaleCSharp, -64, 63, 1, 0, true, true };
+  Slider patchScaleDSlider{ PatchScaleD, -64, 63, 1, 0, true, true };
+  Slider patchScaleDSharpSlider{ PatchScaleDSharp, -64, 63, 1, 0, true, true };
+  Slider patchScaleESlider{ PatchScaleE, -64, 63, 1, 0, true, true };
+  Slider patchScaleFSlider{ PatchScaleF, -64, 63, 1, 0, true, true };
+  Slider patchScaleFSharpSlider{ PatchScaleFSharp, -64, 63, 1, 0, true, true };
+  Slider patchScaleGSlider{ PatchScaleG, -64, 63, 1, 0, true, true };
+  Slider patchScaleGSharpSlider{ PatchScaleGSharp, -64, 63, 1, 0, true, true };
+  Slider patchScaleASlider{ PatchScaleA, -64, 63, 1, 0, true, true };
+  Slider patchScaleASharpSlider{ PatchScaleASharp, -64, 63, 1, 0, true, true };
+  Slider patchScaleBSlider{ PatchScaleB, -64, 63, 1, 0, true, true };
   juce::Label patchScaleCLabel{ "", "C" };
   juce::Label patchScaleCSharpLabel{ "", "C#" };
   juce::Label patchScaleDLabel{ "", "D" };

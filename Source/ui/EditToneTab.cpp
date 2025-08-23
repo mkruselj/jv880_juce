@@ -60,7 +60,7 @@ EditToneTab::EditToneTab
     velRangeLowSlider.setRange(0, 127, 1);
     velRangeLowSlider.addListener(this);
     addAndMakeVisible(velRangeLabel);
-    velRangeLabel.setText("Velocity Range", juce::dontSendNotification);
+    velRangeLabel.setText("Vel Range", juce::dontSendNotification);
     velRangeLabel.attachToComponent(&velRangeLowSlider, true);
 
     addAndMakeVisible(velRangeHighSlider);
@@ -412,7 +412,7 @@ EditToneTab::EditToneTab
     pitchRandomComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(pitchRandomComboBox, pitchRandoms);
     addAndMakeVisible(pitchRandomLabel);
-    pitchRandomLabel.setText("Random | KF", juce::dontSendNotification);
+    pitchRandomLabel.setText("Random | KT", juce::dontSendNotification);
     pitchRandomLabel.attachToComponent(&pitchRandomComboBox, true);
 
     addAndMakeVisible(pitchKFComboBox);
@@ -425,7 +425,7 @@ EditToneTab::EditToneTab
     penvLevSensSlider.setRange(-12, 12, 1);
     penvLevSensSlider.addListener(this);
     addAndMakeVisible(penvLevSensLabel);
-    penvLevSensLabel.setText("Pitch Sens", juce::dontSendNotification);
+    penvLevSensLabel.setText(std::string{"Vel→PEnv"}, juce::dontSendNotification);
     penvLevSensLabel.attachToComponent(&penvLevSensSlider, true);
 
     addAndMakeVisible(penvTime1SensComboBox);
@@ -433,7 +433,7 @@ EditToneTab::EditToneTab
     penvTime1SensComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(penvTime1SensComboBox, np100);
     addAndMakeVisible(penvTime1SensLabel);
-    penvTime1SensLabel.setText("Time Sens", juce::dontSendNotification);
+    penvTime1SensLabel.setText(std::string{"Vel→PEnv T1 | T4"}, juce::dontSendNotification);
     penvTime1SensLabel.attachToComponent(&penvTime1SensComboBox, true);
 
     addAndMakeVisible(penvTime4SensComboBox);
@@ -446,7 +446,7 @@ EditToneTab::EditToneTab
     penvTimeKFSensComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(penvTimeKFSensComboBox, np100);
     addAndMakeVisible(penvTimeKFSensLabel);
-    penvTimeKFSensLabel.setText("Time KF", juce::dontSendNotification);
+    penvTimeKFSensLabel.setText(std::string{"KT→PEnv Time"}, juce::dontSendNotification);
     penvTimeKFSensLabel.attachToComponent(&penvTimeKFSensComboBox, true);
 
     addAndMakeVisible(penvDepthSlider);
@@ -454,7 +454,7 @@ EditToneTab::EditToneTab
     penvDepthSlider.setRange(-12, 12, 1);
     penvDepthSlider.addListener(this);
     addAndMakeVisible(penvDepthLabel);
-    penvDepthLabel.setText("Pitch Depth", juce::dontSendNotification);
+    penvDepthLabel.setText("PEnv Depth", juce::dontSendNotification);
     penvDepthLabel.attachToComponent(&penvDepthSlider, true);
 
     addAndMakeVisible(penv1TimeSlider);
@@ -462,7 +462,7 @@ EditToneTab::EditToneTab
     penv1TimeSlider.setRange(0, 127, 1);
     penv1TimeSlider.addListener(this);
     addAndMakeVisible(penv1TimeLabel);
-    penv1TimeLabel.setText("Time | Level 1", juce::dontSendNotification);
+    penv1TimeLabel.setText("PEnv T1 | L1", juce::dontSendNotification);
     penv1TimeLabel.attachToComponent(&penv1TimeSlider, true);
     addAndMakeVisible(penv1LevelSlider);
     penv1LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -474,7 +474,7 @@ EditToneTab::EditToneTab
     penv2TimeSlider.setRange(0, 127, 1);
     penv2TimeSlider.addListener(this);
     addAndMakeVisible(penv2TimeLabel);
-    penv2TimeLabel.setText("2", juce::dontSendNotification);
+    penv2TimeLabel.setText("T2 | L2", juce::dontSendNotification);
     penv2TimeLabel.attachToComponent(&penv2TimeSlider, true);
     addAndMakeVisible(penv2LevelSlider);
     penv2LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -486,7 +486,7 @@ EditToneTab::EditToneTab
     penv3TimeSlider.setRange(0, 127, 1);
     penv3TimeSlider.addListener(this);
     addAndMakeVisible(penv3TimeLabel);
-    penv3TimeLabel.setText("3", juce::dontSendNotification);
+    penv3TimeLabel.setText("T3 | L3", juce::dontSendNotification);
     penv3TimeLabel.attachToComponent(&penv3TimeSlider, true);
     addAndMakeVisible(penv3LevelSlider);
     penv3LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -498,7 +498,7 @@ EditToneTab::EditToneTab
     penv4TimeSlider.setRange(0, 127, 1);
     penv4TimeSlider.addListener(this);
     addAndMakeVisible(penv4TimeLabel);
-    penv4TimeLabel.setText("4", juce::dontSendNotification);
+    penv4TimeLabel.setText("T4 | L4", juce::dontSendNotification);
     penv4TimeLabel.attachToComponent(&penv4TimeSlider, true);
     addAndMakeVisible(penv4LevelSlider);
     penv4LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -542,7 +542,7 @@ EditToneTab::EditToneTab
     filterKFComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(filterKFComboBox, keyFollows);
     addAndMakeVisible(filterKFLabel);
-    filterKFLabel.setText("KF | Vel Curve", juce::dontSendNotification);
+    filterKFLabel.setText("KT | Vel Curve", juce::dontSendNotification);
     filterKFLabel.attachToComponent(&filterKFComboBox, true);
 
     std::vector<std::string> velCurves{ "1", "2", "3", "4", "5", "6", "7" };
@@ -557,7 +557,7 @@ EditToneTab::EditToneTab
     fenvLevSensSlider.setRange(-63, 63, 1);
     fenvLevSensSlider.addListener(this);
     addAndMakeVisible(fenvLevSensLabel);
-    fenvLevSensLabel.setText("TVF Sens", juce::dontSendNotification);
+    fenvLevSensLabel.setText(std::string{"Vel→FEnv"}, juce::dontSendNotification);
     fenvLevSensLabel.attachToComponent(&fenvLevSensSlider, true);
 
     addAndMakeVisible(fenvTime1SensComboBox);
@@ -565,7 +565,7 @@ EditToneTab::EditToneTab
     fenvTime1SensComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(fenvTime1SensComboBox, np100);
     addAndMakeVisible(fenvTime1SensLabel);
-    fenvTime1SensLabel.setText("Time Sens", juce::dontSendNotification);
+    fenvTime1SensLabel.setText(std::string{"Vel→FEnv T1 | T4"}, juce::dontSendNotification);
     fenvTime1SensLabel.attachToComponent(&fenvTime1SensComboBox, true);
 
     addAndMakeVisible(fenvTime4SensComboBox);
@@ -578,7 +578,7 @@ EditToneTab::EditToneTab
     fenvTimeKFSensComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(fenvTimeKFSensComboBox, np100);
     addAndMakeVisible(fenvTimeKFSensLabel);
-    fenvTimeKFSensLabel.setText("Time KF", juce::dontSendNotification);
+    fenvTimeKFSensLabel.setText(std::string{"KT→FEnv Time"}, juce::dontSendNotification);
     fenvTimeKFSensLabel.attachToComponent(&fenvTimeKFSensComboBox, true);
 
     addAndMakeVisible(fenvDepthSlider);
@@ -586,7 +586,7 @@ EditToneTab::EditToneTab
     fenvDepthSlider.setRange(-63, 63, 1);
     fenvDepthSlider.addListener(this);
     addAndMakeVisible(fenvDepthLabel);
-    fenvDepthLabel.setText("TVF Depth", juce::dontSendNotification);
+    fenvDepthLabel.setText("FEnv Depth", juce::dontSendNotification);
     fenvDepthLabel.attachToComponent(&fenvDepthSlider, true);
 
     addAndMakeVisible(fenv1TimeSlider);
@@ -594,7 +594,7 @@ EditToneTab::EditToneTab
     fenv1TimeSlider.setRange(0, 127, 1);
     fenv1TimeSlider.addListener(this);
     addAndMakeVisible(fenv1TimeLabel);
-    fenv1TimeLabel.setText("Time | Level 1", juce::dontSendNotification);
+    fenv1TimeLabel.setText("FEnv T1 | L1", juce::dontSendNotification);
     fenv1TimeLabel.attachToComponent(&fenv1TimeSlider, true);
     addAndMakeVisible(fenv1LevelSlider);
     fenv1LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -606,7 +606,7 @@ EditToneTab::EditToneTab
     fenv2TimeSlider.setRange(0, 127, 1);
     fenv2TimeSlider.addListener(this);
     addAndMakeVisible(fenv2TimeLabel);
-    fenv2TimeLabel.setText("2", juce::dontSendNotification);
+    fenv2TimeLabel.setText("T2 | L2", juce::dontSendNotification);
     fenv2TimeLabel.attachToComponent(&fenv2TimeSlider, true);
     addAndMakeVisible(fenv2LevelSlider);
     fenv2LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -618,7 +618,7 @@ EditToneTab::EditToneTab
     fenv3TimeSlider.setRange(0, 127, 1);
     fenv3TimeSlider.addListener(this);
     addAndMakeVisible(fenv3TimeLabel);
-    fenv3TimeLabel.setText("3", juce::dontSendNotification);
+    fenv3TimeLabel.setText("T3 | L3", juce::dontSendNotification);
     fenv3TimeLabel.attachToComponent(&fenv3TimeSlider, true);
     addAndMakeVisible(fenv3LevelSlider);
     fenv3LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -630,7 +630,7 @@ EditToneTab::EditToneTab
     fenv4TimeSlider.setRange(0, 127, 1);
     fenv4TimeSlider.addListener(this);
     addAndMakeVisible(fenv4TimeLabel);
-    fenv4TimeLabel.setText("4", juce::dontSendNotification);
+    fenv4TimeLabel.setText("T4 | L4", juce::dontSendNotification);
     fenv4TimeLabel.attachToComponent(&fenv4TimeSlider, true);
     addAndMakeVisible(fenv4LevelSlider);
     fenv4LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -650,7 +650,7 @@ EditToneTab::EditToneTab
     levelKFComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(levelKFComboBox, np100);
     addAndMakeVisible(levelKFLabel);
-    levelKFLabel.setText("Level/Pan KF", juce::dontSendNotification);
+    levelKFLabel.setText(std::string{"KT→Level | Pan"}, juce::dontSendNotification);
     levelKFLabel.attachToComponent(&levelKFComboBox, true);
 
     addAndMakeVisible(panSlider);
@@ -698,7 +698,7 @@ EditToneTab::EditToneTab
     aenvLevSensSlider.setRange(-63, 63, 1);
     aenvLevSensSlider.addListener(this);
     addAndMakeVisible(aenvLevSensLabel);
-    aenvLevSensLabel.setText("TVF Sens", juce::dontSendNotification);
+    aenvLevSensLabel.setText(std::string{"Vel→AEnv"}, juce::dontSendNotification);
     aenvLevSensLabel.attachToComponent(&aenvLevSensSlider, true);
 
     addAndMakeVisible(aenvTime1SensComboBox);
@@ -706,7 +706,7 @@ EditToneTab::EditToneTab
     aenvTime1SensComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(aenvTime1SensComboBox, np100);
     addAndMakeVisible(aenvTime1SensLabel);
-    aenvTime1SensLabel.setText("Time Sens", juce::dontSendNotification);
+    aenvTime1SensLabel.setText(std::string{"Vel→AEnv T1 | T4"}, juce::dontSendNotification);
     aenvTime1SensLabel.attachToComponent(&aenvTime1SensComboBox, true);
 
     addAndMakeVisible(aenvTime4SensComboBox);
@@ -719,7 +719,7 @@ EditToneTab::EditToneTab
     aenvTimeKFSensComboBox.setScrollWheelEnabled(true);
     addMenuEntriesFromArray(aenvTimeKFSensComboBox, np100);
     addAndMakeVisible(aenvTimeKFSensLabel);
-    aenvTimeKFSensLabel.setText("Time KF", juce::dontSendNotification);
+    aenvTimeKFSensLabel.setText(std::string{"KT→AEnv Time"}, juce::dontSendNotification);
     aenvTimeKFSensLabel.attachToComponent(&aenvTimeKFSensComboBox, true);
 
     addAndMakeVisible(aenv1TimeSlider);
@@ -727,7 +727,7 @@ EditToneTab::EditToneTab
     aenv1TimeSlider.setRange(0, 127, 1);
     aenv1TimeSlider.addListener(this);
     addAndMakeVisible(aenv1TimeLabel);
-    aenv1TimeLabel.setText("Time | Level 1", juce::dontSendNotification);
+    aenv1TimeLabel.setText("AEnv T1 | L1", juce::dontSendNotification);
     aenv1TimeLabel.attachToComponent(&aenv1TimeSlider, true);
     addAndMakeVisible(aenv1LevelSlider);
     aenv1LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -739,7 +739,7 @@ EditToneTab::EditToneTab
     aenv2TimeSlider.setRange(0, 127, 1);
     aenv2TimeSlider.addListener(this);
     addAndMakeVisible(aenv2TimeLabel);
-    aenv2TimeLabel.setText("2", juce::dontSendNotification);
+    aenv2TimeLabel.setText("T2 | L2", juce::dontSendNotification);
     aenv2TimeLabel.attachToComponent(&aenv2TimeSlider, true);
     addAndMakeVisible(aenv2LevelSlider);
     aenv2LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -751,7 +751,7 @@ EditToneTab::EditToneTab
     aenv3TimeSlider.setRange(0, 127, 1);
     aenv3TimeSlider.addListener(this);
     addAndMakeVisible(aenv3TimeLabel);
-    aenv3TimeLabel.setText("3", juce::dontSendNotification);
+    aenv3TimeLabel.setText("T3 | L3", juce::dontSendNotification);
     aenv3TimeLabel.attachToComponent(&aenv3TimeSlider, true);
     addAndMakeVisible(aenv3LevelSlider);
     aenv3LevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
@@ -763,7 +763,7 @@ EditToneTab::EditToneTab
     aenv4TimeSlider.setRange(0, 127, 1);
     aenv4TimeSlider.addListener(this);
     addAndMakeVisible(aenv4TimeLabel);
-    aenv4TimeLabel.setText("4", juce::dontSendNotification);
+    aenv4TimeLabel.setText("T4 | L4", juce::dontSendNotification);
     aenv4TimeLabel.attachToComponent(&aenv4TimeSlider, true);
 
     addAndMakeVisible(drySlider);
@@ -976,14 +976,14 @@ void EditToneTab::updateValues()
 
 void EditToneTab::resized()
 {
-    const auto top = 10;
     const auto sliderLeft1 = 100;
-    const auto width = getWidth() / 3 - sliderLeft1 - 10;
+    const auto sliderLeft2 = sliderLeft1 + getWidth() / 3 + 5;
+    const auto sliderLeft3 = sliderLeft2 + getWidth() / 3 + 5;
+    const auto top = 10;
+    const auto width = 150;
     const auto halfWidth = width / 2;
-    const auto sliderLeft2 = sliderLeft1 + getWidth() / 3 + 10;
-    const auto sliderLeft3 = sliderLeft2 + getWidth() / 3 - 10;
     const auto height = 24;
-    const auto vMargin = 24;
+    const auto vMargin = height;
 
     toneSwitchToggle      .setBounds(sliderLeft1 - 90, top + height * 0 + vMargin * 0, width, height);
 
